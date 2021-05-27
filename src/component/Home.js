@@ -1,16 +1,15 @@
 import React,{useEffect,useState} from 'react'
 import {useHistory, Link } from 'react-router-dom';
 import './Home.css'
-import productData from '../productData.json'
 import {connect} from 'react-redux'
 
 function HomePage({updatedData}){
     const [data,setData] = useState([])
     const history = useHistory();
     useEffect(() => {
-      setData(productData)
+      setData(updatedData)
   
-    }, [data])
+    }, [updatedData])
 
     return(
         <table>
@@ -21,13 +20,13 @@ function HomePage({updatedData}){
                 <th>isEditable</th>
             </tr>
           
-            {data.map((prdct,index)=>(
+            {data.length>0 && data?.map((prdct,index)=>(
               <tr>
-                  <td>{updatedData?.name ?? prdct.product_name}</td>
-                  <td>{updatedData?.weight ??prdct.weight}</td>
-                  <td>{updatedData?.availability ??prdct.availability}</td>
+                  <td>{prdct?.product_name}</td>
+                  <td>{prdct?.weight}</td>
+                  <td>{prdct?.availability}</td>
                   <td>
-                    {updatedData?.isEditable ?? prdct.isEditable? 
+                    {prdct?.isEditable? 
                      <Link to={`/edit-products/${prdct._id}`}>
                      <button onClick={()=>history.push(`/edit-products/:${prdct._id}`)}>
                       Edit</button>
@@ -44,7 +43,7 @@ function HomePage({updatedData}){
 }
 const mapStateToProps = state => {
   return {
-      updatedData: state.product.updatedData
+      updatedData: state.product.data
   }
 }
 export default connect(mapStateToProps)(HomePage)
