@@ -3,6 +3,8 @@ import {useHistory, Link } from 'react-router-dom';
 import './Home.css'
 import {connect} from 'react-redux'
 
+
+//site deployed htttps://cranky-kepler-f6d1d0.netlify.app
 function HomePage({updatedData}){
     const [data,setData] = useState([])
     const history = useHistory();
@@ -10,6 +12,7 @@ function HomePage({updatedData}){
       setData(updatedData)
   
     }, [updatedData])
+    console.log(updatedData,'updated..')
 
     return(
         <table>

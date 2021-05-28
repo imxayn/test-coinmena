@@ -7,10 +7,11 @@ const initialState={
 
 
 const productReducer = (state = initialState, action ) => {
+    console.log(action,'action..')
     switch(action.type){
         case EDIT_DATA : return {
             ...state,
-            updatedData: [{...state},action.payload]
+            updatedData: action.payload
         }
         default:  return state
     }

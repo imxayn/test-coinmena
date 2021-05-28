@@ -3,11 +3,9 @@ import { Form, Field } from 'react-final-form'
 import {useHistory, Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { bindActionCreators } from "redux";
 import {connect} from 'react-redux'
 import {editData} from '../store/productAction'
-import { useSelector, useDispatch } from "react-redux";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -50,11 +48,11 @@ function EditProduct({data,editData}){
              </div>
              <br />
              <div>
-             <Field name="availability" validate={required}>
+             <Field name="weight" validate={required}>
                     {({ input, meta }) => (
                       <div>
-                        <label>Availability</label>
-                        <input {...input} type="text" placeholder="availability" />
+                        <label>Weight</label>
+                        <input {...input} type="text" placeholder="eight" />
                     {meta.error && meta.touched && <span>{meta.error}</span>}
                 </div>
                 )}
@@ -63,16 +61,24 @@ function EditProduct({data,editData}){
              <br />
 
              <div>
-                 <label>Weight</label>
-                 <Field name="weight" component="input" placeholder="Weight" type="text" />
+                 <label>Availability</label>
+                 <Field name="Availability" component="input" placeholder="availability" type="number" />
              </div>
 
              <br />
+
              <div>
-                 <label>Product Url</label>
-                 <Field name="productUrl" component="input" placeholder="Product Url" type="text" />
+             <Field name="productUrl" validate={required}>
+                    {({ input, meta }) => (
+                      <div>
+                        <label>Product Url</label>
+                        <input {...input} type="text" placeholder="Product Url" />
+                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                </div>
+                )}
+          </Field>
              </div>
-             
+
              <div>
 
              <br />
@@ -104,19 +110,42 @@ function EditProduct({data,editData}){
              <div>
             <label>Price Range</label>
             <Field name="priceRange" component="select">
-              <option value="$1-10">$1-10</option>
+              {values.priceTier==='budget' ? (<>
+                <option value="$1-10">$1-10</option>
               <option value="$11-20">$11-20</option>
-              <option value="$21-30">$21-30</option>
+              <option value="$21-30">$21-50</option></>)
+              :(
+                <>
+                 <option value="$1-10">$50-99</option>
+                 <option value="$11-20">$10-199</option>
+                 <option value="$21-30">$200+</option>
+                 </>
+              )}
+             
             </Field>
           </div>
 
           <br />
-             <div>
-                 <label>Is Editable</label>
-                 <Field name="isEditable" component="input" placeholder="Is Editable" type="checkbox" />
-             </div>
-             <br />
-             <button type="submit">Submit</button>
+
+          <div>
+
+
+          <Field name="isEditable" validate={required}>
+                    {({ input, meta }) => (
+                      <div>
+                        <label>Is Editable</label>
+                        <input {...input} type="checkbox"  placeholder="Is Editable" />
+                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                </div>
+                )}
+          </Field>
+          </div>
+          <br />
+          <div>
+          <button type="submit">Submit</button>
+          </div>
+
+            
          </form>
          )}
         
